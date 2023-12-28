@@ -8,19 +8,19 @@ const loader = document.getElementById('loader')
 
 let apiQuotes=[];
 
-function loading (){
+function showLoader (){
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-function complete (){
+function hideLoader (){
     quoteContainer.hidden = false;
     loader.hidden = true;
 }
 
 //New Quote 
 function newQuote(){
-    loading();
+    showLoader();
     const quote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
     authorText.textContent = quote.author;
     //Check quote length to determine font size
@@ -30,18 +30,18 @@ function newQuote(){
         quoteText.classList.remove('long-quote')
     }
     quoteText.textContent = quote.text;
-    complete();
+    hideLoader();
 }
 //Get Quote
 async function getQuotes() {
-    loading();
+    showLoader();
     const apiUrl = 'https://jacintodesign.github.io/quotes-api/data/quotes.json';
     try {
         const response = await fetch(apiUrl);
         apiQuotes = await response.json();
         newQuote()
     } catch (error){
-
+        alert('Error, please try again later...')
     }
 
 };
